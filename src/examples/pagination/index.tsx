@@ -4,8 +4,47 @@ import { Pagination as PLevel2 } from "./level_2";
 import { Pagination as PLevel3 } from "./level_3";
 import { Pagination as PLevel4 } from "./level_4";
 import { Pagination as PLevel5 } from "./level_5";
+import { Pagination as PLevel6 } from "./level_6";
+import { RootProvider } from "./stores/root-provider";
 
 const tabs = [
+  {
+    name: "level 6",
+    children: (
+      <>
+        <h1>
+          Level 6{" "}
+          <span style={{ color: "yellow", fontSize: "1.5rem" }}>(Beta)</span>
+        </h1>
+        <p>
+          Чтобы увидеть всю силу сторов, необходимо наладить работу по
+          взаимодействию сторов между собой. В итоге создаем `RootStore` который
+          зависит от `RoutherStore` и добавляем зависимость в `PaginationStore`
+          от `RoutherStore`. Теперь, чтобы взаимодействовать с url необходимо
+          подключать в свой стор `RouterStore` и все получения/изменения с url
+          идут через один стор.
+        </p>
+        <ul>
+          <li>
+            <strong>Проблема</strong> useRouterStore не понимает когда
+            рендерится, хотя и работает через контекст. Помогает observer на
+            компонент `Pagination`
+          </li>
+          <li>
+            <strong> Проблема</strong> обернув все в observer, нужно разделить
+            все внутри на компоненты иначе перерендеривается все
+          </li>
+          <li>
+            <strong>Проблема</strong> обернув все в observer, сломалась
+            выставление input value, хотя реакции срабатывают
+          </li>
+        </ul>
+        <RootProvider>
+          <PLevel6 />
+        </RootProvider>
+      </>
+    ),
+  },
   {
     name: "level 5",
     children: (

@@ -23,6 +23,7 @@ function App() {
 }
 
 function Layout() {
+  console.log("render Layout");
   return (
     <div style={{ padding: "1rem" }}>
       <Outlet />
