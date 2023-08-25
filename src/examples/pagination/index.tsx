@@ -108,7 +108,7 @@ const tabs = [
 ];
 
 export const Pagination = () => {
-  const [activeTab, setActiveTab] = useState(tabs.at(0)?.name);
+  const [activeTab, setActiveTab] = useState(tabs.at(0)?.name ?? "");
   const rendetTabContent =
     tabs.find((tab) => tab.name === activeTab)?.children ?? null;
   return (
@@ -124,6 +124,22 @@ export const Pagination = () => {
             {tab.name}
           </button>
         ))}
+
+        <a
+          style={{
+            display: "block",
+            marginLeft: "1rem",
+            order: tabs.length + 1,
+          }}
+          target="_blank"
+          rel="noreferrer"
+          href={`https://github.com/s-kobets/mobx-examples/tree/main/src/examples/pagination/${activeTab.replace(
+            /\s/,
+            "_"
+          )}`}
+        >
+          Source
+        </a>
       </div>
 
       {rendetTabContent}
