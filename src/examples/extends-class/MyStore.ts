@@ -1,4 +1,4 @@
-import { makeObservable, observable, action, override } from "mobx";
+import { makeObservable, observable, action } from "mobx";
 
 function getRandomInt(max: number) {
   return Math.floor(Math.random() * max);

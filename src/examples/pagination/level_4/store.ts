@@ -1,4 +1,4 @@
-import { autorun, makeAutoObservable, reaction, runInAction } from "mobx";
+import { autorun, makeAutoObservable, reaction } from "mobx";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
 
@@ -57,6 +57,7 @@ export const usePagination = (store: PaginationStore) => {
     if (page) {
       store.onChange(+page);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {

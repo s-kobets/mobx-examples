@@ -1,7 +1,6 @@
 import { ButtonHTMLAttributes, InputHTMLAttributes, useRef } from "react";
 import { PaginationStore, usePagination } from "./store";
 import { Observer, observer } from "mobx-react-lite";
-import { Link } from "react-router-dom";
 
 const Page = observer(({ value }: { value: number }) => {
   return <h1>{value}</h1>;

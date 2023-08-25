@@ -92,6 +92,7 @@ export const usePagination = (store: PaginationStore) => {
     if (page) {
       store.onChange(+page);
     }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   useEffect(() => {
