@@ -1,10 +1,10 @@
 {
   "files": {
-    "main.css": "/static/css/main.1f231c7e.css",
-    "main.js": "/static/js/main.b5485faa.js",
-    "index.html": "/index.html",
-    "main.1f231c7e.css.map": "/static/css/main.1f231c7e.css.map",
-    "main.b5485faa.js.map": "/static/js/main.b5485faa.js.map"
+    "main.css": "/mobx-examples/static/css/main.1f231c7e.css",
+    "main.js": "/mobx-examples/static/js/main.b5485faa.js",
+    "index.html": "/mobx-examples/index.html",
+    "main.1f231c7e.css.map": "/mobx-examples/static/css/main.1f231c7e.css.map",
+    "main.b5485faa.js.map": "/mobx-examples/static/js/main.b5485faa.js.map"
   },
   "entrypoints": [
     "static/css/main.1f231c7e.css",
