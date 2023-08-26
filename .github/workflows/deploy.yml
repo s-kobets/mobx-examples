@@ -18,16 +18,12 @@ jobs:
         with:
           node-version: 16 # Adjust the Node.js version as needed
 
-      - name: Configure Git user
-        run: |
-          git config user.name "${{ secrets.GIT_USER_NAME }}"
-          git config user.email "${{ secrets.GIT_USER_EMAIL }}"
-
       - name: Install dependencies
         run: npm ci
 
       - name: Deploy with gh-pages
         run: |
+          git remote set-url origin https://git:${DEPLOY_KEY}@github.com/${REPOSITORY_NAME}.git
           npm run deploy
         env:
           GITHUB_TOKEN: ${{ secrets.DEPLOY_KEY }}
