@@ -26,7 +26,9 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      - name: Run deploy script
-        run: npm run deploy
+      - name: Deploy with gh-pages
+        run: |
+          git remote set-url origin https://git:${DEPLOY_KEY}@github.com/${REPOSITORY_NAME}.git
+          npm run deploy -- -u "github-actions-bot <support+actions@github.com>"
         env:
-          GH_TOKEN: ${{ secrets.DEPLOY_KEY }}
+          GITHUB_TOKEN: ${{ secrets.DEPLOY_KEY }}
