@@ -15,9 +15,9 @@ const dataToLzCompressedJson = (data: object) => {
   return base64;
 };
 
-type CodeSandBox = { jsx: string; store: string };
+type CodeSandBoxProps = { jsx: string; store: string };
 
-function getSandBoxParameters({ jsx, store }: CodeSandBox) {
+function getSandBoxParameters({ jsx, store }: CodeSandBoxProps) {
   return dataToLzCompressedJson({
     files: {
       "index.tsx": {
@@ -57,10 +57,11 @@ root.render(<App />);
   });
 }
 
-export const CodeSandBox = ({ jsx, store }: CodeSandBox) => {
+export const CodeSandBox = ({ jsx, store }: CodeSandBoxProps) => {
   const parameters = getSandBoxParameters({ jsx, store });
   return (
     <iframe
+      title="codesandbox"
       style={{
         width: "100%",
         height: "100vh",
