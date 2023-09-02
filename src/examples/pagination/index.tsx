@@ -1,4 +1,4 @@
-import { useState } from "react";
+import { SyntheticEvent, useCallback, useEffect, useState } from "react";
 import { Pagination as PLevel1 } from "./level_1";
 import { Pagination as PLevel2 } from "./level_2";
 import { Pagination as PLevel3 } from "./level_3";
@@ -6,6 +6,8 @@ import { Pagination as PLevel4 } from "./level_4";
 import { Pagination as PLevel5 } from "./level_5";
 import { Pagination as PLevel6 } from "./level_6";
 import { RootProvider } from "./stores/root-provider";
+import { useSearchParams } from "react-router-dom";
+import { useGetQueries } from "helpers/getQueries";
 
 const tabs = [
   {
@@ -147,10 +149,34 @@ const tabs = [
   },
 ];
 
+const queryNameTab = "tab";
+
 export const Pagination = () => {
-  const [activeTab, setActiveTab] = useState(tabs.at(0)?.name ?? "");
+  const [searchParams, setSearchParams] = useSearchParams();
+  const activeTab = searchParams.get(queryNameTab) ?? "";
+
+  const queries = useGetQueries();
+
+  useEffect(() => {
+    if (!activeTab.length) {
+      setSearchParams({
+        ...queries,
+        [queryNameTab]: tabs.at(0)?.name ?? "",
+      });
+    }
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
+
   const rendetTabContent =
     tabs.find((tab) => tab.name === activeTab)?.children ?? null;
+
+  const handleChangeTab = useCallback(
+    (tabName: string) => () => {
+      setSearchParams({ ...queries, [queryNameTab]: tabName });
+    },
+    [queries, setSearchParams]
+  );
+
   return (
     <>
       <div style={{ display: "flex" }}>
@@ -159,7 +185,7 @@ export const Pagination = () => {
             style={{ order: tabs.length - index }}
             disabled={activeTab === tab.name}
             key={tab.name}
-            onClick={() => setActiveTab(tab.name)}
+            onClick={handleChangeTab(tab.name)}
           >
             {tab.name}
           </button>

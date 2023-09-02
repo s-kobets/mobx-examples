@@ -1,3 +1,4 @@
+import { useGetQueries } from "helpers/getQueries";
 import { autorun, makeAutoObservable, reaction } from "mobx";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -57,6 +58,7 @@ const queryNamePage = "page";
 
 export const usePagination = (store: PaginationStore) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const queries = useGetQueries();
 
   // initial
   useEffect(() => {
@@ -84,11 +86,11 @@ export const usePagination = (store: PaginationStore) => {
       const page = searchParams.get(queryNamePage);
       console.log("autorun", page, store.stringPage);
 
-      setSearchParams({ [queryNamePage]: store.stringPage });
+      setSearchParams({ ...queries, [queryNamePage]: store.stringPage });
     });
 
     return () => {
       disposer();
     };
-  }, [searchParams, setSearchParams, store]);
+  }, [queries, searchParams, setSearchParams, store]);
 };
