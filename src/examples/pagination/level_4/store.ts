@@ -9,14 +9,20 @@ export class PaginationStore {
 
   constructor() {
     makeAutoObservable(this);
-
-    reaction(
-      () => this.page,
-      (page) => {
-        this.onInputChange(String(page));
-      }
-    );
   }
+
+  reactions = () => {
+    const disposers = [
+      reaction(
+        () => this.stringPage,
+        (stringPage) => {
+          this.onInputChange(stringPage);
+        }
+      ),
+    ];
+
+    return () => disposers.forEach((i) => i());
+  };
 
   get isFirstPage() {
     return this.page === 1;
@@ -31,6 +37,7 @@ export class PaginationStore {
   }
 
   onInputChange(value: string) {
+    console.log(123, "onInputChange", value);
     const page = Number(value);
     if (page > this.total) {
       this.inputPage = this.total;
@@ -60,6 +67,8 @@ export const usePagination = (store: PaginationStore) => {
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
+  useEffect(() => store.reactions(), [store]);
+
   useEffect(() => {
     // reaction(
     //   () => store.stringPage,
@@ -71,11 +80,15 @@ export const usePagination = (store: PaginationStore) => {
     //   }
     // );
 
-    autorun(() => {
+    const disposer = autorun(() => {
       const page = searchParams.get(queryNamePage);
       console.log("autorun", page, store.stringPage);
 
       setSearchParams({ [queryNamePage]: store.stringPage });
     });
+
+    return () => {
+      disposer();
+    };
   }, [searchParams, setSearchParams, store]);
 };

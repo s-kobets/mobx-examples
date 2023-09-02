@@ -103,7 +103,7 @@ const PaginationTotal = observer(() => {
   );
 });
 
-const Pagination = observer(() => {
+const Pagination = () => {
   const routerStore = useRouterStore();
   const store = useRef(new PaginationStore(routerStore)).current;
 
@@ -121,6 +121,6 @@ const Pagination = observer(() => {
       <PaginationPage />
     </PaginationStoreContext.Provider>
   );
-});
+};
 
 export { Pagination };

@@ -1,4 +1,5 @@
 import { makeAutoObservable, reaction } from "mobx";
+import { useEffect } from "react";
 
 export class PaginationStore {
   page = 1;
@@ -7,15 +8,21 @@ export class PaginationStore {
 
   constructor() {
     makeAutoObservable(this);
-
-    reaction(
-      () => this.page,
-      (page) => {
-        console.log("reaction");
-        this.onInputChange(String(page));
-      }
-    );
   }
+
+  reactions = () => {
+    const disposers = [
+      reaction(
+        () => this.page,
+        (page) => {
+          console.log("reaction level_3");
+          this.onInputChange(String(page));
+        }
+      ),
+    ];
+    return () => disposers.forEach((i) => i());
+  };
+
   get isFirstPage() {
     return this.page === 1;
   }
@@ -40,4 +47,8 @@ export class PaginationStore {
   }
 }
 
-export const usePagination = (store: PaginationStore) => {};
+export const usePagination = (store: PaginationStore) => {
+  useEffect(() => {
+    store.reactions();
+  }, [store]);
+};

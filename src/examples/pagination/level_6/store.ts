@@ -15,24 +15,34 @@ export class PaginationStore {
 
   constructor(public routerStore: RouterStore) {
     makeAutoObservable(this);
-
-    reaction(
-      () => this.page,
-      (page) => {
-        console.log(123, "reaction", page);
-        this.onInputChange(String(page));
-      }
-    );
-
-    reaction(
-      () => this.swrData?.data,
-      (data) => {
-        if (data?.total) {
-          this.total = data.total / this.peerPage;
-        }
-      }
-    );
   }
+
+  reactions = () => {
+    const disposers = [
+      reaction(
+        () => this.stringPage,
+        (stringPage) => {
+          this.onInputChange(stringPage);
+        }
+      ),
+      reaction(
+        () => this.swrData?.data,
+        (data) => {
+          if (data?.total) {
+            this.total = data.total / this.peerPage;
+          }
+        }
+      ),
+      reaction(
+        () => this.stringPage,
+        (stringPage) => {
+          this.routerStore.setQuery({ page: stringPage });
+        }
+      ),
+    ];
+
+    return () => disposers.forEach((i) => i());
+  };
 
   get isFirstPage() {
     return this.page === 1;
@@ -85,15 +95,9 @@ export class PaginationStore {
   }
 }
 
-const fetcher = (url: string) => fetch(url).then((res) => res.json());
-
 export const usePagination = (store: PaginationStore) => {
-  const swrData = useSWR(
-    `https://dummyjson.com/products?limit=${store.peerPage}&skip=${
-      store.page * store.peerPage
-    }`,
-    fetcher
-  );
+  console.log(123, "usePagination");
+  const swrData = useSWR(store.requestList, store.fetchList);
 
   useEffect(() => {
     store.setSwrData(swrData);
@@ -106,14 +110,7 @@ export const usePagination = (store: PaginationStore) => {
     }
   }, [store, store.routerStore.page]);
 
-  useEffect(() => {
-    reaction(
-      () => store.stringPage,
-      (stringPage) => {
-        store.routerStore.setQuery({ page: stringPage });
-      }
-    );
-  }, [store]);
+  useEffect(() => store.reactions(), [store]);
 };
 
 export const PaginationStoreContext = createContext<PaginationStore | null>(
