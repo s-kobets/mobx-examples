@@ -1,5 +1,3 @@
-import { CodeSandBox } from "helpers/codesandbox";
-const jsx = `
 import { ButtonHTMLAttributes, useRef } from "react";
 import { PaginationStore, usePagination } from "./store";
 import { Observer, observer } from "mobx-react-lite";
@@ -27,32 +25,6 @@ const Pagination = () => {
       <Observer>{() => <Page value={store.page} />}</Observer>
     </div>
   );
-};
-
-export default Pagination;
-`;
-
-const store = `
-import { makeAutoObservable } from "mobx";
-
-export class PaginationStore {
-  page = 1;
-  inputPage = this.page;
-  total = 10;
-
-  constructor() {
-    makeAutoObservable(this);
-  }
-
-  onChange(page: number) {
-    this.page = page;
-  }
-}
-
-export const usePagination = (store: PaginationStore) => {};
-`;
-const Pagination = () => {
-  return <CodeSandBox jsx={jsx} store={store} />;
 };
 
 export { Pagination };

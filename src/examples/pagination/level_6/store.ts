@@ -85,8 +85,15 @@ export class PaginationStore {
   }
 }
 
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
+
 export const usePagination = (store: PaginationStore) => {
-  const swrData = useSWR(store.requestList, store.fetchList);
+  const swrData = useSWR(
+    `https://dummyjson.com/products?limit=${store.peerPage}&skip=${
+      store.page * store.peerPage
+    }`,
+    fetcher
+  );
 
   useEffect(() => {
     store.setSwrData(swrData);
