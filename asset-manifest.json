@@ -1,13 +1,13 @@
 {
   "files": {
     "main.css": "/mobx-examples/static/css/main.1f231c7e.css",
-    "main.js": "/mobx-examples/static/js/main.d8b54174.js",
+    "main.js": "/mobx-examples/static/js/main.e54ca0c1.js",
     "index.html": "/mobx-examples/index.html",
     "main.1f231c7e.css.map": "/mobx-examples/static/css/main.1f231c7e.css.map",
-    "main.d8b54174.js.map": "/mobx-examples/static/js/main.d8b54174.js.map"
+    "main.e54ca0c1.js.map": "/mobx-examples/static/js/main.e54ca0c1.js.map"
   },
   "entrypoints": [
     "static/css/main.1f231c7e.css",
-    "static/js/main.d8b54174.js"
+    "static/js/main.e54ca0c1.js"
   ]
 }
