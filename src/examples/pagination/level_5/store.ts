@@ -1,3 +1,4 @@
+import { useGetQueries } from "helpers/getQueries";
 import { makeAutoObservable, reaction } from "mobx";
 import { useEffect } from "react";
 import { useSearchParams } from "react-router-dom";
@@ -93,6 +94,7 @@ const queryNamePage = "page";
 
 export const usePagination = (store: PaginationStore) => {
   const [searchParams, setSearchParams] = useSearchParams();
+  const queries = useGetQueries();
   const swrData = useSWR(store.requestList, store.fetchList);
 
   useEffect(() => {
@@ -114,11 +116,11 @@ export const usePagination = (store: PaginationStore) => {
     const disposer = reaction(
       () => store.stringPage,
       (stringPage) => {
-        setSearchParams({ [queryNamePage]: stringPage });
+        setSearchParams({ ...queries, [queryNamePage]: stringPage });
       }
     );
     return () => {
       disposer();
     };
-  }, [searchParams, setSearchParams, store]);
+  }, [queries, searchParams, setSearchParams, store]);
 };

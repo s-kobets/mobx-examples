@@ -1,4 +1,4 @@
-import { SyntheticEvent, useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect } from "react";
 import { Pagination as PLevel1 } from "./level_1";
 import { Pagination as PLevel2 } from "./level_2";
 import { Pagination as PLevel3 } from "./level_3";

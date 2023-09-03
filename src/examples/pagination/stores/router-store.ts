@@ -20,8 +20,13 @@ export class RouterStore {
   }
 
   setQuery: SetQuery = (data) => {
+    const queryKeys = Array.from(this.query.keys()) ?? [];
+    const queries = queryKeys.reduce(
+      (acc, key) => ({ ...acc, [key]: this.query.get(key) }),
+      {}
+    );
     const setSearchParams = this.urlSearchParams[1];
-    return setSearchParams(data);
+    return setSearchParams({ ...queries, ...data });
   };
 
   get page() {
